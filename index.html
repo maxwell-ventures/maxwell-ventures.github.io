@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Jason Jaacks — Serial builder, curious mind, wanderer</title>
-<meta name="description" content="Jason Jaacks — serial builder. Selected work: VLM fine-tuning for disaster response, a community pet-safety app, and a one-input arcade game." />
+<title>Jason Jaacks · Serial builder, curious mind, wanderer</title>
+<meta name="description" content="Jason Jaacks, serial builder. Selected work: a hands-on VLM fine-tuning study, a community pet-safety app, and a one-input arcade game." />
 
 <!-- Open Graph / social preview -->
-<meta property="og:title" content="Jason Jaacks — Serial builder, curious mind, wanderer" />
-<meta property="og:description" content="Selected work: VLM fine-tuning for disaster response, a community pet-safety app, and a one-input arcade game." />
+<meta property="og:title" content="Jason Jaacks · Serial builder, curious mind, wanderer" />
+<meta property="og:description" content="Selected work: a hands-on VLM fine-tuning study, a community pet-safety app, and a one-input arcade game." />
 <meta property="og:type" content="website" />
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%9C%A6%3C/text%3E%3C/svg%3E" />
 
@@ -23,9 +23,9 @@
     --text-faint: #5f6780;
     --border: #1e2233;
     --border-bright: #2b3048;
-    --accent: #2fe0cf;      /* galaxy core — teal-cyan */
-    --accent-2: #64d98a;    /* spiral arms — green */
-    --accent-3: #f2a24a;    /* star-forming knots — amber */
+    --accent: #2fe0cf;      /* galaxy core - teal-cyan */
+    --accent-2: #64d98a;    /* spiral arms - green */
+    --accent-3: #f2a24a;    /* star-forming knots - amber */
     --star-blue: #5cc6ff;   /* foreground stars */
     --glow: rgba(47,224,207,0.15);
     --radius: 16px;
@@ -62,7 +62,7 @@
   }
   a { color: inherit; text-decoration: none; }
 
-  /* ambient background — infrared-nebula wash (galaxy palette) */
+  /* ambient background - infrared-nebula wash (galaxy palette) */
   .glow-bg {
     position: fixed; inset: 0; z-index: 0; pointer-events: none;
     background:
@@ -71,7 +71,7 @@
       radial-gradient(760px 680px at 48% 118%, rgba(242,162,74,0.08), transparent 66%),
       radial-gradient(620px 420px at 82% 66%, rgba(92,198,255,0.06), transparent 70%);
   }
-  /* hero galaxy (Spitzer M81) — black bg blended away via screen */
+  /* hero galaxy (Spitzer M81) - black bg blended away via screen */
   .galaxy {
     position: absolute; z-index: 0; pointer-events: none;
     top: 50%; right: -6%; transform: translateY(-46%);
@@ -242,6 +242,33 @@
   .shot:hover { transform: translateY(-4px) scale(1.03); border-color: var(--accent); box-shadow: 0 12px 28px rgba(0,0,0,0.4); }
   .shot:hover::after { opacity: 1; }
 
+  /* prominent play button (nom-nom) */
+  .play-btn {
+    display: inline-flex; align-items: center; gap: 11px; margin: 2px 0 18px;
+    font-weight: 700; font-size: 1rem; letter-spacing: -0.01em; padding: 13px 24px; border-radius: 12px;
+    color: #1a0f06; cursor: pointer; border: none;
+    background: linear-gradient(120deg, #f2a24a, #f87171);
+    box-shadow: 0 8px 26px rgba(242,162,74,0.22); transition: transform .18s, box-shadow .18s;
+  }
+  .play-btn:hover { transform: translateY(-2px); box-shadow: 0 14px 34px rgba(242,162,74,0.34); }
+  .play-btn .tri {
+    display: grid; place-items: center; width: 24px; height: 24px; border-radius: 50%;
+    background: rgba(26,15,6,0.18); font-size: 0.72rem; padding-left: 2px;
+  }
+  .play-btn .hint { font-weight: 600; font-size: 0.8rem; opacity: 0.72; }
+
+  /* inline game modal (reuses the /play/nomnom build) */
+  .gamebox { position: fixed; inset: 0; z-index: 110; display: none; place-items: center; padding: 3vh 16px;
+    background: rgba(4,6,8,0.93); backdrop-filter: blur(7px); }
+  .gamebox.open { display: grid; }
+  .gamebox .frame {
+    width: min(430px, 94vw); height: min(86vh, 880px); border-radius: 26px; overflow: hidden;
+    border: 1px solid var(--border-bright); box-shadow: 0 30px 90px rgba(0,0,0,0.65); background: #0F1116;
+  }
+  .gamebox iframe { width: 100%; height: 100%; border: 0; display: block; }
+  .gb-open { margin-top: 14px; font-size: 0.85rem; font-weight: 600; color: var(--text-dim); }
+  .gb-open:hover { color: var(--accent); }
+
   /* lightbox */
   .lb { position: fixed; inset: 0; z-index: 100; display: none; place-items: center; padding: 5vh 20px;
     background: rgba(4,6,8,0.9); backdrop-filter: blur(6px); }
@@ -323,7 +350,7 @@
     <div class="eyebrow"><span class="dot"></span> Available for what's next</div>
     <h1 class="name">Jason Jaacks<span class="accent">.</span></h1>
     <p class="tagline"><b>Serial builder.</b> Curious mind. Wanderer.</p>
-    <p class="subline">I follow curiosity into working software — from teaching myself to fine-tune vision-language models, to a pet-safety app on TestFlight, to a game about a chat-bubble that eats tokens. I like shipping the thing and being honest about what it proves.</p>
+    <p class="subline">I follow curiosity into working software: from teaching myself to fine-tune vision-language models, to a pet-safety app on TestFlight, to a game about a chat-bubble that eats tokens. I like shipping the thing and being honest about what it proves.</p>
     <div class="cta-row">
       <a href="#work" class="btn btn-primary">See the work &nbsp;↓</a>
       <a href="#contact" class="btn btn-ghost">Get in touch</a>
@@ -349,7 +376,7 @@
               <span class="p-title">Fine-Tuning a Vision-Language Model, End to End</span>
               <span class="p-status status-progress">Learning project</span>
             </div>
-            <p class="p-desc">A hands-on study of <strong>VLM adaptation from scratch</strong> — building the data pipeline, running the LoRA training loop, and (the actual point) learning <strong>how to measure whether fine-tuning helped at all</strong>: the delta against the same model zero-shot. The task — grading building damage in satellite imagery, conditioned on event context — is just a convenient, richly-labeled dataset (xBD) to learn the mechanics on, <strong>not a disaster-response product</strong>. The deliverable is fluency, and being precise about what the artifact does and doesn't prove. <span style="color:var(--text-faint)">Full write-up in the repo.</span></p>
+            <p class="p-desc">A hands-on study of <strong>VLM adaptation from scratch</strong>: building the data pipeline, running the LoRA training loop, and (the actual point) learning <strong>how to measure whether fine-tuning helped at all</strong>, i.e. the delta against the same model zero-shot. The task itself (grading building damage in satellite imagery, conditioned on event context) is just a convenient, richly-labeled dataset (xBD) to learn the mechanics on, <strong>not a disaster-response product</strong>. The deliverable is fluency, and being precise about what the artifact does and doesn't prove. <span style="color:var(--text-faint)">Full write-up in the repo.</span></p>
             <div class="vlm-strip">
               <figure class="vlm-chip"><span class="lbl pre">Pre-event</span><img src="assets/vlm/socal_pre.jpg" alt="Satellite chip, intact structure before the wildfire" loading="lazy"></figure>
               <figure class="vlm-chip"><span class="lbl post">Post-event</span><img src="assets/vlm/socal_post.jpg" alt="Satellite chip, same location after the wildfire" loading="lazy"></figure>
@@ -380,19 +407,19 @@
         <article class="project reveal" style="--p-a:#64d98a; --p-b:#2fe0cf;">
           <div class="p-body">
             <div class="p-top">
-              <span class="p-title">Maxwell — Community Pet-Safety App</span>
+              <span class="p-title">Maxwell: Community Pet-Safety App</span>
               <span class="p-status status-live">On TestFlight</span>
             </div>
-            <p class="p-desc">A <strong>React Native (Expo)</strong> iOS app for pet safety and community coordination. Point your camera at food and an <strong>AI vision model returns a per-category risk assessment</strong> (toxic · digestive · choking · allergen); a weather-driven <strong>Pet Quality Index</strong> folds heat and precip into a plain-language "safe to walk?" read; plus hazard mapping, lost-dog beacons, and "pack" chat. Real production concerns throughout — Hermes, crash-demotion to soft exceptions, Sentry observability, in-flight request de-dup and cache-safe forecasting.</p>
+            <p class="p-desc">A <strong>React Native (Expo)</strong> iOS app for pet safety and community coordination. Point your camera at food and an <strong>AI vision model returns a per-category risk assessment</strong> (toxic · digestive · choking · allergen); a weather-driven <strong>Pet Quality Index</strong> folds heat and precip into a plain-language "safe to walk?" read; plus hazard mapping, lost-dog beacons, and "pack" chat. Real production concerns throughout: Hermes, crash-demotion to soft exceptions, Sentry observability, in-flight request de-dup and cache-safe forecasting.</p>
             <div class="p-metrics">
               <div class="metric"><span class="v">iOS</span><span class="l">TestFlight builds</span></div>
               <div class="metric"><span class="v">Expo SDK 54</span><span class="l">RN 0.81 · Hermes</span></div>
               <div class="metric"><span class="v">PQI</span><span class="l">Weather safety index</span></div>
             </div>
             <div class="p-shots">
-              <figure class="shot" data-cap="Paw safety score" data-full="assets/shots/maxwell-safe.jpg"><img src="assets/shots/maxwell-safe.jpg" alt="Maxwell — pet safety score home screen" loading="lazy"></figure>
-              <figure class="shot" data-cap="AI food-hazard scan" data-full="assets/shots/maxwell-foodscan.jpg"><img src="assets/shots/maxwell-foodscan.jpg" alt="Maxwell — AI food hazard risk assessment" loading="lazy"></figure>
-              <figure class="shot" data-cap="Weather details" data-full="assets/shots/maxwell-weather.jpg"><img src="assets/shots/maxwell-weather.jpg" alt="Maxwell — hourly and 5-day weather" loading="lazy"></figure>
+              <figure class="shot" data-cap="Paw safety score" data-full="assets/shots/maxwell-safe.jpg"><img src="assets/shots/maxwell-safe.jpg" alt="Maxwell - pet safety score home screen" loading="lazy"></figure>
+              <figure class="shot" data-cap="AI food-hazard scan" data-full="assets/shots/maxwell-foodscan.jpg"><img src="assets/shots/maxwell-foodscan.jpg" alt="Maxwell - AI food hazard risk assessment" loading="lazy"></figure>
+              <figure class="shot" data-cap="Weather details" data-full="assets/shots/maxwell-weather.jpg"><img src="assets/shots/maxwell-weather.jpg" alt="Maxwell - hourly and 5-day weather" loading="lazy"></figure>
             </div>
             <div class="p-tags">
               <span class="tag">React Native</span><span class="tag">Expo</span><span class="tag">TypeScript</span><span class="tag">iOS</span><span class="tag">AI vision</span><span class="tag">Sentry</span><span class="tag">EAS Build</span>
@@ -407,25 +434,26 @@
         <article class="project reveal" style="--p-a:#f2a24a; --p-b:#f87171;">
           <div class="p-body">
             <div class="p-top">
-              <span class="p-title">NOM NOM TOKENS — One-Input Arcade Game</span>
+              <span class="p-title">NOM NOM TOKENS: One-Input Arcade Game</span>
               <span class="p-status status-play">Playable</span>
             </div>
-            <p class="p-desc">A mindless, one-input arcade game about an AI chat-bubble that eats tokens until its context window overflows — Pac-Man's endless chomp, Flappy Bird's one-input lane, wrapped in dry corporate-AI satire. <strong>The joke is encoded in the physics: resting is fatal.</strong> Pure HTML5 canvas + vanilla ES modules, no build step; game logic fully decoupled from rendering so the same core wraps into an iOS app via Capacitor.</p>
+            <button class="play-btn" data-game="play/nomnom/"><span class="tri">▶</span> Play in your browser <span class="hint">· no install</span></button>
+            <p class="p-desc">A mindless, one-input arcade game about an AI chat-bubble that eats tokens until its context window overflows. Pac-Man's endless chomp, Flappy Bird's one-input lane, wrapped in dry corporate-AI satire. <strong>The joke is encoded in the physics: resting is fatal.</strong> Pure HTML5 canvas plus vanilla ES modules, no build step; game logic fully decoupled from rendering so the same core wraps into an iOS app via Capacitor.</p>
             <div class="p-metrics">
               <div class="metric"><span class="v">21</span><span class="l">Rank levels</span></div>
               <div class="metric"><span class="v">1</span><span class="l">Input (tap)</span></div>
               <div class="metric"><span class="v">0</span><span class="l">Dependencies</span></div>
             </div>
             <div class="p-shots">
-              <figure class="shot" data-cap="Title screen" data-full="assets/shots/nomnom-title.jpg"><img src="assets/shots/nomnom-title.jpg" alt="NOM NOM TOKENS — title screen" loading="lazy"></figure>
-              <figure class="shot" data-cap="All-hands meeting mode" data-full="assets/shots/nomnom-play.jpg"><img src="assets/shots/nomnom-play.jpg" alt="NOM NOM TOKENS — gameplay" loading="lazy"></figure>
+              <figure class="shot" data-cap="Title screen" data-full="assets/shots/nomnom-title.jpg"><img src="assets/shots/nomnom-title.jpg" alt="NOM NOM TOKENS - title screen" loading="lazy"></figure>
+              <figure class="shot" data-cap="All-hands meeting mode" data-full="assets/shots/nomnom-play.jpg"><img src="assets/shots/nomnom-play.jpg" alt="NOM NOM TOKENS - gameplay" loading="lazy"></figure>
             </div>
             <div class="p-tags">
               <span class="tag">JavaScript</span><span class="tag">HTML5 Canvas</span><span class="tag">Web Audio</span><span class="tag">Capacitor</span><span class="tag">iOS</span>
             </div>
             <div class="p-links">
               <a class="p-link" data-repo="nomnom" href="#contact">View on GitHub →</a>
-              <a class="p-link muted" data-play href="#" style="display:none;">▶ Play in browser</a>
+              <a class="p-link" data-game="play/nomnom/" href="#">▶ Play again</a>
             </div>
           </div>
         </article>
@@ -442,9 +470,9 @@
         <span class="section-note">Experiments, tools &amp; works-in-progress</span>
       </div>
       <div class="mini-grid">
-        <div class="mini reveal"><h3><span class="dot" style="background:#2fe0cf"></span>parallax</h3><p>MCP job matcher — scores roles against a memory of your work and generates ATS-compliant resumes.</p></div>
+        <div class="mini reveal"><h3><span class="dot" style="background:#2fe0cf"></span>parallax</h3><p>MCP job matcher that scores roles against a memory of your work and generates ATS-compliant resumes.</p></div>
         <div class="mini reveal"><h3><span class="dot" style="background:#f2a24a"></span>burnrate.ai</h3><p>A runway &amp; burn-rate tool for founders. TypeScript.</p></div>
-        <div class="mini reveal"><h3><span class="dot" style="background:#64d98a"></span>haboob</h3><p>Kalshi weather-market prediction — modeling short-horizon weather for prediction markets.</p></div>
+        <div class="mini reveal"><h3><span class="dot" style="background:#64d98a"></span>haboob</h3><p>Kalshi weather-market prediction: modeling short-horizon weather for prediction markets.</p></div>
         <div class="mini reveal"><h3><span class="dot" style="background:#5cc6ff"></span>cortex</h3><p>A long-running personal knowledge &amp; agent-memory experiment.</p></div>
         <div class="mini reveal"><h3><span class="dot" style="background:#f87171"></span>ebay-mcp</h3><p>An MCP server for programmatic eBay search &amp; listing workflows. Python.</p></div>
       </div>
@@ -459,9 +487,9 @@
       </div>
       <div class="about-grid">
         <div class="about-text reveal">
-          <p><strong>I build things to understand them.</strong> The through-line across my work isn't a single stack or domain — it's curiosity. If a problem is interesting, I'd rather stand up a working prototype and learn where the hard parts actually are than theorize about them.</p>
-          <p>That's taken me from <strong>fine-tuning vision-language models</strong> on satellite disaster imagery, to shipping a <strong>community pet-safety app</strong> to TestFlight, to building tools, games, and MCP servers in between. I care about the parts most demos skip: measuring whether the clever idea actually helped, and writing down honestly what it does — and doesn't — prove.</p>
-          <p>Serial builder, curious mind, wanderer — usually all three at once.</p>
+          <p><strong>I build things to understand them.</strong> The through-line across my work isn't a single stack or domain; it's curiosity. If a problem is interesting, I'd rather stand up a working prototype and learn where the hard parts actually are than theorize about them.</p>
+          <p>That's taken me from <strong>fine-tuning vision-language models</strong> on satellite disaster imagery, to shipping a <strong>community pet-safety app</strong> to TestFlight, to building tools, games, and MCP servers in between. I care about the parts most demos skip: measuring whether the clever idea actually helped, and writing down honestly what it does (and doesn't) prove.</p>
+          <p>Serial builder, curious mind, wanderer. Usually all three at once.</p>
         </div>
         <div class="facts reveal">
           <div class="fact"><span class="fi"></span><span class="ft">Currently deep in <b>VLM fine-tuning</b> &amp; applied ML</span></div>
@@ -497,6 +525,13 @@
     </div>
   </div>
 </footer>
+
+<!-- inline game -->
+<div class="gamebox" id="gamebox" role="dialog" aria-modal="true" aria-label="NOM NOM TOKENS">
+  <button class="lb-close" id="gbClose" aria-label="Close game">✕</button>
+  <div class="frame"><iframe id="gbFrame" title="NOM NOM TOKENS" allow="autoplay"></iframe></div>
+  <a class="gb-open" id="gbOpen" target="_blank" rel="noopener">Open fullscreen ↗</a>
+</div>
 
 <!-- lightbox -->
 <div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Screenshot viewer">
@@ -669,12 +704,21 @@
     if (url) { a.href = url; a.target = '_blank'; a.rel = 'noopener'; }
     else { a.classList.add('muted'); a.textContent = 'Repo coming soon'; a.style.pointerEvents = 'none'; }
   });
-  if (PLAY_URL) { const p = document.querySelector('[data-play]'); p.href = PLAY_URL; p.style.display = 'inline-flex'; p.target='_blank'; }
+  // ---- Inline game modal (reuses the /play/nomnom build) ----
+  (function () {
+    const box = document.getElementById('gamebox'), fr = document.getElementById('gbFrame'), open = document.getElementById('gbOpen');
+    function launch(url) { fr.src = url; open.href = url; box.classList.add('open'); document.body.style.overflow = 'hidden'; setTimeout(() => fr.focus(), 60); }
+    function close() { box.classList.remove('open'); fr.src = 'about:blank'; document.body.style.overflow = ''; }
+    document.querySelectorAll('[data-game]').forEach(el => el.addEventListener('click', e => { e.preventDefault(); launch(el.getAttribute('data-game')); }));
+    document.getElementById('gbClose').addEventListener('click', close);
+    box.addEventListener('click', e => { if (e.target === box) close(); });
+    document.addEventListener('keydown', e => { if (box.classList.contains('open') && e.key === 'Escape') close(); });
+  })();
 
   // ---- LinkedIn (filled in at deploy time) ----
   const LINKEDIN = 'https://www.linkedin.com/in/jason-jaacks-data/';
   const li = document.getElementById('linkedinLink');
-  if (LINKEDIN) { li.href = LINKEDIN; } else { li.href = '#'; li.title = 'LinkedIn — add URL'; }
+  if (LINKEDIN) { li.href = LINKEDIN; } else { li.href = '#'; li.title = 'LinkedIn - add URL'; }
 
   // ---- Scroll reveal ----
   const io = new IntersectionObserver((entries) => {
