@@ -290,6 +290,23 @@
   .mini h3 .dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; box-shadow: 0 0 8px currentColor; }
   .mini p { color: var(--text-dim); font-size: 0.86rem; }
 
+  /* publications */
+  .pubs { display: grid; gap: 2px; }
+  .pub {
+    display: grid; grid-template-columns: 62px 1fr auto; gap: 18px; align-items: baseline;
+    padding: 15px 14px; border-radius: 12px; border: 1px solid transparent; transition: background .18s, border-color .18s;
+  }
+  .pub:hover { background: var(--card); border-color: var(--border); }
+  .pub-year { font-family: var(--serif); font-style: italic; font-size: 1.1rem; color: var(--accent); }
+  .pub-title { display: block; font-weight: 600; font-size: 1rem; color: var(--text); letter-spacing: -0.01em; margin-bottom: 3px; line-height: 1.35; }
+  .pub-meta { font-size: 0.85rem; color: var(--text-dim); }
+  .pub-meta b { color: var(--text); font-weight: 600; }
+  .pub-arrow { align-self: center; color: var(--text-faint); font-size: 0.95rem; transition: color .18s, transform .18s; }
+  .pub:hover .pub-arrow { color: var(--accent); transform: translate(2px, -2px); }
+  .pub-all { display: inline-flex; align-items: center; gap: 7px; margin-top: 18px; margin-left: 14px; font-size: 0.9rem; font-weight: 600; color: var(--accent); }
+  .pub-all:hover { gap: 11px; }
+  @media (max-width: 560px) { .pub { grid-template-columns: 44px 1fr; } .pub-arrow { display: none; } }
+
   /* about */
   .about-grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 40px; align-items: start; }
   .about-text p { color: var(--text-dim); font-size: 1.05rem; margin-bottom: 16px; }
@@ -337,6 +354,7 @@
     <div class="nav-links">
       <a href="#work">Work</a>
       <a href="#more">More</a>
+      <a href="#publications">Papers</a>
       <a href="#about">About</a>
       <a href="#contact">Contact</a>
       <button class="theme-btn" id="themeBtn" aria-label="Toggle theme" title="Toggle light/dark">◐</button>
@@ -479,16 +497,59 @@
     </div>
   </section>
 
+  <!-- PUBLICATIONS -->
+  <section class="section" id="publications">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <h2 class="section-title"><span class="num">03</span>Publications</h2>
+        <span class="section-note">A previous life in astrophysics: galaxy formation &amp; cosmic reionization</span>
+      </div>
+      <div class="pubs">
+        <a class="pub reveal" href="https://arxiv.org/abs/1804.07372" target="_blank" rel="noopener">
+          <span class="pub-year">2018</span>
+          <span><span class="pub-title">Legacy of star formation in the pre-reionization universe</span><span class="pub-meta"><b>J. Jaacks</b>, S. L. Finkelstein, V. Bromm · arXiv:1804.07372</span></span>
+          <span class="pub-arrow">↗</span>
+        </a>
+        <a class="pub reveal" href="https://arxiv.org/abs/1709.06647" target="_blank" rel="noopener">
+          <span class="pub-year">2017</span>
+          <span><span class="pub-title">Dust in the first galaxies</span><span class="pub-meta"><b>J. Jaacks</b>, S. L. Finkelstein, V. Bromm · arXiv:1709.06647</span></span>
+          <span class="pub-arrow">↗</span>
+        </a>
+        <a class="pub reveal" href="https://arxiv.org/abs/1705.08059" target="_blank" rel="noopener">
+          <span class="pub-year">2017</span>
+          <span><span class="pub-title">Baseline metal enrichment from Population III star formation in cosmological volume simulations</span><span class="pub-meta"><b>J. Jaacks</b>, R. Thompson, S. L. Finkelstein, V. Bromm · arXiv:1705.08059</span></span>
+          <span class="pub-arrow">↗</span>
+        </a>
+        <a class="pub reveal" href="https://arxiv.org/abs/1507.00713" target="_blank" rel="noopener">
+          <span class="pub-year">2015</span>
+          <span><span class="pub-title">Connecting the dots: tracking galaxy evolution using constant cumulative number density at 3&lt;z&lt;7</span><span class="pub-meta"><b>J. Jaacks</b>, S. L. Finkelstein, K. Nagamine · arXiv:1507.00713</span></span>
+          <span class="pub-arrow">↗</span>
+        </a>
+        <a class="pub reveal" href="https://arxiv.org/abs/1301.5270" target="_blank" rel="noopener">
+          <span class="pub-year">2013</span>
+          <span><span class="pub-title">Impact of an H₂-based star-formation model on the z≥6 luminosity function and the ionizing-photon budget for reionization</span><span class="pub-meta"><b>J. Jaacks</b>, R. Thompson, K. Nagamine · arXiv:1301.5270</span></span>
+          <span class="pub-arrow">↗</span>
+        </a>
+        <a class="pub reveal" href="https://arxiv.org/abs/1104.2345" target="_blank" rel="noopener">
+          <span class="pub-year">2011</span>
+          <span><span class="pub-title">Steep faint-end slopes of galaxy mass and luminosity functions at z≥6 and the implications for reionization</span><span class="pub-meta"><b>J. Jaacks</b>, J. Choi, K. Nagamine, R. Thompson, S. Varghese · arXiv:1104.2345</span></span>
+          <span class="pub-arrow">↗</span>
+        </a>
+      </div>
+      <a class="pub-all reveal" href="https://arxiv.org/search/advanced?advanced=&amp;terms-0-operator=AND&amp;terms-0-term=%5Ejaacks%2C+jason&amp;terms-0-field=author&amp;size=50" target="_blank" rel="noopener">View all 10 papers on arXiv →</a>
+    </div>
+  </section>
+
   <!-- ABOUT -->
   <section class="section" id="about">
     <div class="wrap">
       <div class="section-head reveal">
-        <h2 class="section-title"><span class="num">03</span>About</h2>
+        <h2 class="section-title"><span class="num">04</span>About</h2>
       </div>
       <div class="about-grid">
         <div class="about-text reveal">
           <p><strong>I build things to understand them.</strong> The through-line across my work isn't a single stack or domain; it's curiosity. If a problem is interesting, I'd rather stand up a working prototype and learn where the hard parts actually are than theorize about them.</p>
-          <p>That's taken me from <strong>fine-tuning vision-language models</strong> on satellite disaster imagery, to shipping a <strong>community pet-safety app</strong> to TestFlight, to building tools, games, and MCP servers in between. I care about the parts most demos skip: measuring whether the clever idea actually helped, and writing down honestly what it does (and doesn't) prove.</p>
+          <p>I started out in <strong>astrophysics research</strong> (galaxy formation and cosmic reionization, a handful of papers below), so the "wanderer" part isn't only a metaphor. Since then it's taken me from <strong>fine-tuning vision-language models</strong> on satellite imagery, to shipping a <strong>community pet-safety app</strong> to TestFlight, to building tools, games, and MCP servers in between. I care about the parts most demos skip: measuring whether the clever idea actually helped, and writing down honestly what it does (and doesn't) prove.</p>
           <p>Serial builder, curious mind, wanderer. Usually all three at once.</p>
         </div>
         <div class="facts reveal">
