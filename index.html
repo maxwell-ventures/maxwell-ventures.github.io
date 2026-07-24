@@ -323,7 +323,7 @@
     <div class="eyebrow"><span class="dot"></span> Available for what's next</div>
     <h1 class="name">Jason Jaacks<span class="accent">.</span></h1>
     <p class="tagline"><b>Serial builder.</b> Curious mind. Wanderer.</p>
-    <p class="subline">I follow curiosity into working software — from vision-language models for disaster response to a pet-safety app on TestFlight to a game about a chat-bubble that eats tokens. I like shipping the thing and being honest about what it proves.</p>
+    <p class="subline">I follow curiosity into working software — from teaching myself to fine-tune vision-language models, to a pet-safety app on TestFlight, to a game about a chat-bubble that eats tokens. I like shipping the thing and being honest about what it proves.</p>
     <div class="cta-row">
       <a href="#work" class="btn btn-primary">See the work &nbsp;↓</a>
       <a href="#contact" class="btn btn-ghost">Get in touch</a>
@@ -346,10 +346,10 @@
         <article class="project reveal" style="--p-a:#2fe0cf; --p-b:#5cc6ff;">
           <div class="p-body">
             <div class="p-top">
-              <span class="p-title">Disaster Damage Assessment via VLM Fine-Tuning</span>
-              <span class="p-status status-progress">In progress</span>
+              <span class="p-title">Fine-Tuning a Vision-Language Model, End to End</span>
+              <span class="p-status status-progress">Learning project</span>
             </div>
-            <p class="p-desc">Fine-tunes an open-weight <strong>vision-language model</strong> to grade structural damage in post-disaster satellite imagery — <strong>conditioned on stated event context</strong> (a collapsed roof means something different after a hurricane than a wildfire) — and emits a machine-parseable assessment with cited evidence and a triage priority. The result that matters isn't absolute accuracy; it's the <strong>delta against the same model zero-shot</strong>. Deliberately honest about what the artifact does and doesn't prove.</p>
+            <p class="p-desc">A hands-on study of <strong>VLM adaptation from scratch</strong> — building the data pipeline, running the LoRA training loop, and (the actual point) learning <strong>how to measure whether fine-tuning helped at all</strong>: the delta against the same model zero-shot. The task — grading building damage in satellite imagery, conditioned on event context — is just a convenient, richly-labeled dataset (xBD) to learn the mechanics on, <strong>not a disaster-response product</strong>. The deliverable is fluency, and being precise about what the artifact does and doesn't prove. <span style="color:var(--text-faint)">Full write-up in the repo.</span></p>
             <div class="vlm-strip">
               <figure class="vlm-chip"><span class="lbl pre">Pre-event</span><img src="assets/vlm/socal_pre.jpg" alt="Satellite chip, intact structure before the wildfire" loading="lazy"></figure>
               <figure class="vlm-chip"><span class="lbl post">Post-event</span><img src="assets/vlm/socal_post.jpg" alt="Satellite chip, same location after the wildfire" loading="lazy"></figure>
@@ -358,7 +358,7 @@
                 <div class="grade">DESTROYED</div>
                 <div class="row"><span class="pri">Triage · Priority 1</span></div>
                 <div class="ev"><b>Evidence:</b> structure footprint no longer intact; scorched-ground signature replaces roofline and canopy.</div>
-                <div class="cap">illustrative model output · xBD socal-fire chip</div>
+                <div class="cap">illustrative task output · the format the model learns to emit</div>
               </div>
             </div>
             <div class="p-metrics">
@@ -368,7 +368,7 @@
               <div class="metric"><span class="v">Zero-shot</span><span class="l">Baseline measured</span></div>
             </div>
             <div class="p-tags">
-              <span class="tag">Python</span><span class="tag">PyTorch</span><span class="tag">LoRA fine-tuning</span><span class="tag">Vision-Language Models</span><span class="tag">xBD / xView2</span><span class="tag">Satellite imagery</span>
+              <span class="tag">Python</span><span class="tag">PyTorch</span><span class="tag">LoRA fine-tuning</span><span class="tag">Vision-Language Models</span><span class="tag">Model evaluation</span><span class="tag">xBD dataset</span>
             </div>
             <div class="p-links">
               <a class="p-link" data-repo="vlm" href="#contact">View on GitHub →</a>
