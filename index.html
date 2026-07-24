@@ -10,22 +10,24 @@
 <meta property="og:title" content="Jason Jaacks — Serial builder, curious mind, wanderer" />
 <meta property="og:description" content="Selected work: VLM fine-tuning for disaster response, a community pet-safety app, and a one-input arcade game." />
 <meta property="og:type" content="website" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%9C%A6%3C/text%3E%3C/svg%3E" />
 
 <style>
   :root {
-    --bg: #0b0d10;
-    --bg-soft: #111418;
-    --card: #14181d;
-    --card-hover: #181d23;
-    --text: #e8eaed;
-    --text-dim: #9aa3ad;
-    --text-faint: #626b74;
-    --border: #23282f;
-    --border-bright: #2e353d;
-    --accent: #6ee7b7;
-    --accent-2: #7dd3fc;
-    --accent-3: #c4b5fd;
-    --glow: rgba(110,231,183,0.14);
+    --bg: #06070d;
+    --bg-soft: #0c0e17;
+    --card: #0f1220;
+    --card-hover: #141826;
+    --text: #e9ebf2;
+    --text-dim: #99a1b5;
+    --text-faint: #5f6780;
+    --border: #1e2233;
+    --border-bright: #2b3048;
+    --accent: #2fe0cf;      /* galaxy core — teal-cyan */
+    --accent-2: #64d98a;    /* spiral arms — green */
+    --accent-3: #f2a24a;    /* star-forming knots — amber */
+    --star-blue: #5cc6ff;   /* foreground stars */
+    --glow: rgba(47,224,207,0.15);
     --radius: 16px;
     --maxw: 1080px;
     --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -41,9 +43,10 @@
     --text-faint: #808a94;
     --border: #e4e8ec;
     --border-bright: #d3d9df;
-    --accent: #0d9488;
-    --accent-2: #0284c7;
-    --accent-3: #7c3aed;
+    --accent: #0d9488;      /* teal */
+    --accent-2: #16a34a;    /* green */
+    --accent-3: #d97706;    /* amber */
+    --star-blue: #2563eb;
     --glow: rgba(13,148,136,0.10);
   }
 
@@ -59,13 +62,39 @@
   }
   a { color: inherit; text-decoration: none; }
 
-  /* ambient background */
+  /* ambient background — infrared-nebula wash (galaxy palette) */
   .glow-bg {
     position: fixed; inset: 0; z-index: 0; pointer-events: none;
     background:
-      radial-gradient(700px 500px at 12% -5%, var(--glow), transparent 70%),
-      radial-gradient(650px 500px at 100% 8%, rgba(125,211,252,0.08), transparent 70%),
-      radial-gradient(700px 600px at 45% 110%, rgba(196,181,253,0.07), transparent 70%);
+      radial-gradient(900px 620px at 15% -8%, rgba(47,224,207,0.13), transparent 68%),
+      radial-gradient(820px 620px at 102% 4%, rgba(100,217,138,0.11), transparent 66%),
+      radial-gradient(760px 680px at 48% 118%, rgba(242,162,74,0.08), transparent 66%),
+      radial-gradient(620px 420px at 82% 66%, rgba(92,198,255,0.06), transparent 70%);
+  }
+  /* hero galaxy (Spitzer M81) — black bg blended away via screen */
+  .galaxy {
+    position: absolute; z-index: 0; pointer-events: none;
+    top: 50%; right: -6%; transform: translateY(-46%);
+    width: min(760px, 62vw); aspect-ratio: 1;
+    mix-blend-mode: screen; opacity: 0.92;
+    -webkit-mask-image: radial-gradient(circle at 50% 50%, #000 42%, transparent 72%);
+    mask-image: radial-gradient(circle at 50% 50%, #000 42%, transparent 72%);
+    animation: spin 240s linear infinite;
+  }
+  .galaxy img { width: 100%; height: 100%; object-fit: contain; display: block; }
+  @keyframes spin { to { transform: translateY(-46%) rotate(360deg); } }
+  :root[data-theme="light"] .galaxy { mix-blend-mode: multiply; opacity: 0.5; filter: saturate(1.1); }
+  @media (prefers-reduced-motion: reduce) { .galaxy { animation: none; } }
+  @media (max-width: 720px) { .galaxy { right: -22%; top: 34%; width: 128vw; opacity: 0.55; } }
+
+  /* starfield canvas */
+  #stars { position: fixed; inset: 0; z-index: 0; pointer-events: none; display: block; }
+  :root[data-theme="light"] #stars { opacity: 0.5; }
+  :root[data-theme="light"] .glow-bg {
+    background:
+      radial-gradient(800px 560px at 15% -8%, rgba(2,132,199,0.09), transparent 68%),
+      radial-gradient(760px 560px at 102% 4%, rgba(124,58,237,0.07), transparent 66%),
+      radial-gradient(700px 620px at 48% 116%, rgba(13,148,136,0.06), transparent 68%);
   }
 
   .wrap { position: relative; z-index: 1; max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
@@ -92,7 +121,7 @@
   @media (max-width: 640px) { .nav-links a:not(.theme-wrap) { display: none; } }
 
   /* hero */
-  header.hero { padding: 92px 0 72px; }
+  header.hero { padding: 92px 0 72px; position: relative; overflow: hidden; }
   .eyebrow {
     display: inline-flex; align-items: center; gap: 8px;
     font-size: 0.8rem; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase;
@@ -135,22 +164,17 @@
   /* project cards */
   .projects { display: grid; gap: 22px; }
   .project {
-    position: relative; display: grid; grid-template-columns: 84px 1fr; gap: 22px;
+    position: relative; display: block;
     background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
-    padding: 26px; transition: all .22s ease; overflow: hidden;
+    padding: 26px 26px 26px 30px; transition: all .22s ease; overflow: hidden;
   }
   .project::before {
     content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
     background: linear-gradient(var(--p-a, var(--accent)), var(--p-b, var(--accent-2)));
-    opacity: 0; transition: opacity .22s;
+    opacity: 0.55; transition: opacity .22s, width .22s;
   }
   .project:hover { border-color: var(--border-bright); background: var(--card-hover); transform: translateY(-3px); box-shadow: 0 16px 40px rgba(0,0,0,0.25); }
-  .project:hover::before { opacity: 1; }
-  .p-icon {
-    width: 84px; height: 84px; border-radius: 14px; display: grid; place-items: center; font-size: 2rem;
-    background: linear-gradient(145deg, color-mix(in srgb, var(--p-a) 22%, transparent), color-mix(in srgb, var(--p-b) 14%, transparent));
-    border: 1px solid var(--border-bright); flex-shrink: 0;
-  }
+  .project:hover::before { opacity: 1; width: 4px; }
   .p-body { min-width: 0; }
   .p-top { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 8px; }
   .p-title { font-size: 1.25rem; font-weight: 700; letter-spacing: -0.01em; }
@@ -173,7 +197,34 @@
   .p-link { font-size: 0.88rem; font-weight: 600; color: var(--accent); display: inline-flex; align-items: center; gap: 6px; transition: gap .18s; }
   .p-link:hover { gap: 10px; }
   .p-link.muted { color: var(--text-faint); }
-  @media (max-width: 560px) { .project { grid-template-columns: 1fr; } .p-icon { width: 60px; height: 60px; font-size: 1.5rem; } }
+
+  /* VLM before/after/assessment visual */
+  .vlm-strip {
+    display: grid; grid-template-columns: 1fr 1fr 1.25fr; gap: 12px; align-items: stretch;
+    margin: 6px 0 18px; padding: 14px; border-radius: 14px;
+    background: var(--bg-soft); border: 1px solid var(--border);
+  }
+  .vlm-chip { position: relative; border-radius: 10px; overflow: hidden; border: 1px solid var(--border-bright); aspect-ratio: 1; background: #000; }
+  .vlm-chip img { width: 100%; height: 100%; object-fit: cover; display: block; image-rendering: auto; }
+  .vlm-chip .lbl {
+    position: absolute; top: 7px; left: 7px; font-size: 0.62rem; font-weight: 700; letter-spacing: 0.06em;
+    padding: 2px 7px; border-radius: 5px; text-transform: uppercase; color: #fff; backdrop-filter: blur(3px);
+  }
+  .vlm-chip .lbl.pre  { background: rgba(20,40,60,0.72); border: 1px solid rgba(125,211,252,0.5); }
+  .vlm-chip .lbl.post { background: rgba(70,20,20,0.72); border: 1px solid rgba(248,113,113,0.55); }
+  .vlm-assess {
+    display: flex; flex-direction: column; gap: 7px; padding: 12px; border-radius: 10px;
+    background: linear-gradient(160deg, rgba(20,10,12,0.6), rgba(15,18,32,0.5));
+    border: 1px solid var(--border-bright); font-size: 0.8rem;
+  }
+  .vlm-assess .ctx { font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 0.68rem; color: var(--text-faint); letter-spacing: 0.02em; }
+  .vlm-assess .grade { font-size: 1.15rem; font-weight: 800; letter-spacing: 0.01em; color: #f87171; line-height: 1.1; }
+  .vlm-assess .row { display: flex; align-items: center; gap: 8px; }
+  .vlm-assess .pri { font-size: 0.66rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: #fbbf24; border: 1px solid rgba(251,191,36,0.4); background: rgba(251,191,36,0.08); border-radius: 999px; padding: 2px 8px; }
+  .vlm-assess .ev { font-size: 0.72rem; color: var(--text-dim); line-height: 1.45; }
+  .vlm-assess .ev b { color: var(--text); font-weight: 600; }
+  .vlm-assess .cap { margin-top: auto; font-size: 0.6rem; color: var(--text-faint); font-style: italic; }
+  @media (max-width: 620px) { .vlm-strip { grid-template-columns: 1fr 1fr; } .vlm-assess { grid-column: 1 / -1; } }
 
   /* phone screenshot gallery */
   .p-shots { display: flex; gap: 12px; margin: 4px 0 18px; flex-wrap: wrap; }
@@ -208,8 +259,8 @@
     background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 18px; transition: all .18s;
   }
   .mini:hover { border-color: var(--border-bright); transform: translateY(-2px); }
-  .mini h3 { font-size: 1rem; font-weight: 700; margin-bottom: 5px; display: flex; align-items: center; gap: 8px; }
-  .mini h3 .em { font-size: 1.05rem; }
+  .mini h3 { font-size: 1rem; font-weight: 700; margin-bottom: 5px; display: flex; align-items: center; gap: 9px; }
+  .mini h3 .dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; box-shadow: 0 0 8px currentColor; }
   .mini p { color: var(--text-dim); font-size: 0.86rem; }
 
   /* about */
@@ -217,8 +268,12 @@
   .about-text p { color: var(--text-dim); font-size: 1.05rem; margin-bottom: 16px; }
   .about-text p strong { color: var(--text); }
   .facts { display: grid; gap: 12px; }
-  .fact { display: flex; align-items: center; gap: 12px; background: var(--card); border: 1px solid var(--border); border-radius: 11px; padding: 14px 16px; }
-  .fact .fi { font-size: 1.15rem; }
+  .fact { display: flex; align-items: center; gap: 13px; background: var(--card); border: 1px solid var(--border); border-radius: 11px; padding: 14px 16px; }
+  .fact .fi { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; background: var(--accent); box-shadow: 0 0 9px var(--accent); }
+  .fact:nth-child(2) .fi { background: var(--accent-2); box-shadow: 0 0 9px var(--accent-2); }
+  .fact:nth-child(3) .fi { background: var(--accent-3); box-shadow: 0 0 9px var(--accent-3); }
+  .fact:nth-child(4) .fi { background: var(--star-blue); box-shadow: 0 0 9px var(--star-blue); }
+  .fact:nth-child(5) .fi { background: #f87171; box-shadow: 0 0 9px #f87171; }
   .fact .ft { font-size: 0.92rem; color: var(--text-dim); }
   .fact .ft b { color: var(--text); font-weight: 600; }
   @media (max-width: 760px) { .about-grid { grid-template-columns: 1fr; gap: 26px; } }
@@ -247,6 +302,7 @@
 </head>
 <body>
 <div class="glow-bg"></div>
+<canvas id="stars" aria-hidden="true"></canvas>
 
 <nav>
   <div class="wrap nav-inner">
@@ -262,6 +318,7 @@
 </nav>
 
 <header class="hero">
+  <div class="galaxy" aria-hidden="true"><img src="assets/ssc2019-15b-med.jpg.webp" alt="" /></div>
   <div class="wrap">
     <div class="eyebrow"><span class="dot"></span> Available for what's next</div>
     <h1 class="name">Jason Jaacks<span class="accent">.</span></h1>
@@ -286,14 +343,24 @@
       <div class="projects">
 
         <!-- VLM PoC -->
-        <article class="project reveal" style="--p-a:#7dd3fc; --p-b:#6ee7b7;">
-          <div class="p-icon">🛰️</div>
+        <article class="project reveal" style="--p-a:#2fe0cf; --p-b:#5cc6ff;">
           <div class="p-body">
             <div class="p-top">
               <span class="p-title">Disaster Damage Assessment via VLM Fine-Tuning</span>
               <span class="p-status status-progress">In progress</span>
             </div>
             <p class="p-desc">Fine-tunes an open-weight <strong>vision-language model</strong> to grade structural damage in post-disaster satellite imagery — <strong>conditioned on stated event context</strong> (a collapsed roof means something different after a hurricane than a wildfire) — and emits a machine-parseable assessment with cited evidence and a triage priority. The result that matters isn't absolute accuracy; it's the <strong>delta against the same model zero-shot</strong>. Deliberately honest about what the artifact does and doesn't prove.</p>
+            <div class="vlm-strip">
+              <figure class="vlm-chip"><span class="lbl pre">Pre-event</span><img src="assets/vlm/socal_pre.jpg" alt="Satellite chip, intact structure before the wildfire" loading="lazy"></figure>
+              <figure class="vlm-chip"><span class="lbl post">Post-event</span><img src="assets/vlm/socal_post.jpg" alt="Satellite chip, same location after the wildfire" loading="lazy"></figure>
+              <div class="vlm-assess">
+                <div class="ctx">event: socal-fire · wildfire · +3d</div>
+                <div class="grade">DESTROYED</div>
+                <div class="row"><span class="pri">Triage · Priority 1</span></div>
+                <div class="ev"><b>Evidence:</b> structure footprint no longer intact; scorched-ground signature replaces roofline and canopy.</div>
+                <div class="cap">illustrative model output · xBD socal-fire chip</div>
+              </div>
+            </div>
             <div class="p-metrics">
               <div class="metric"><span class="v">304,370</span><span class="l">Buildings parsed</span></div>
               <div class="metric"><span class="v">19</span><span class="l">Disaster events</span></div>
@@ -310,8 +377,7 @@
         </article>
 
         <!-- Maxwell -->
-        <article class="project reveal" style="--p-a:#6ee7b7; --p-b:#c4b5fd;">
-          <div class="p-icon">🐕</div>
+        <article class="project reveal" style="--p-a:#64d98a; --p-b:#2fe0cf;">
           <div class="p-body">
             <div class="p-top">
               <span class="p-title">Maxwell — Community Pet-Safety App</span>
@@ -338,8 +404,7 @@
         </article>
 
         <!-- nom-nom -->
-        <article class="project reveal" style="--p-a:#c4b5fd; --p-b:#fbbf24;">
-          <div class="p-icon">🍽️</div>
+        <article class="project reveal" style="--p-a:#f2a24a; --p-b:#f87171;">
           <div class="p-body">
             <div class="p-top">
               <span class="p-title">NOM NOM TOKENS — One-Input Arcade Game</span>
@@ -377,11 +442,11 @@
         <span class="section-note">Experiments, tools &amp; works-in-progress</span>
       </div>
       <div class="mini-grid">
-        <div class="mini reveal"><h3><span class="em">💼</span> parallax</h3><p>MCP job matcher — scores roles against a memory of your work and generates ATS-compliant resumes.</p></div>
-        <div class="mini reveal"><h3><span class="em">🔥</span> burnrate.ai</h3><p>A runway &amp; burn-rate tool for founders. TypeScript.</p></div>
-        <div class="mini reveal"><h3><span class="em">🌪️</span> haboob</h3><p>Kalshi weather-market prediction — modeling short-horizon weather for prediction markets.</p></div>
-        <div class="mini reveal"><h3><span class="em">🧠</span> cortex</h3><p>A long-running personal knowledge &amp; agent-memory experiment.</p></div>
-        <div class="mini reveal"><h3><span class="em">🛒</span> ebay-mcp</h3><p>An MCP server for programmatic eBay search &amp; listing workflows. Python.</p></div>
+        <div class="mini reveal"><h3><span class="dot" style="background:#2fe0cf"></span>parallax</h3><p>MCP job matcher — scores roles against a memory of your work and generates ATS-compliant resumes.</p></div>
+        <div class="mini reveal"><h3><span class="dot" style="background:#f2a24a"></span>burnrate.ai</h3><p>A runway &amp; burn-rate tool for founders. TypeScript.</p></div>
+        <div class="mini reveal"><h3><span class="dot" style="background:#64d98a"></span>haboob</h3><p>Kalshi weather-market prediction — modeling short-horizon weather for prediction markets.</p></div>
+        <div class="mini reveal"><h3><span class="dot" style="background:#5cc6ff"></span>cortex</h3><p>A long-running personal knowledge &amp; agent-memory experiment.</p></div>
+        <div class="mini reveal"><h3><span class="dot" style="background:#f87171"></span>ebay-mcp</h3><p>An MCP server for programmatic eBay search &amp; listing workflows. Python.</p></div>
       </div>
     </div>
   </section>
@@ -399,11 +464,11 @@
           <p>Serial builder, curious mind, wanderer — usually all three at once.</p>
         </div>
         <div class="facts reveal">
-          <div class="fact"><span class="fi">🛰️</span><span class="ft">Currently deep in <b>VLM fine-tuning</b> &amp; applied ML</span></div>
-          <div class="fact"><span class="fi">📱</span><span class="ft">Shipped iOS to <b>TestFlight</b> with Expo &amp; EAS</span></div>
-          <div class="fact"><span class="fi">🧰</span><span class="ft">Comfortable across <b>Python, TypeScript &amp; RN</b></span></div>
-          <div class="fact"><span class="fi">🔌</span><span class="ft">Builds <b>MCP servers</b> &amp; AI-agent tooling</span></div>
-          <div class="fact"><span class="fi">🧭</span><span class="ft">Happiest with a <b>working prototype</b> in hand</span></div>
+          <div class="fact"><span class="fi"></span><span class="ft">Currently deep in <b>VLM fine-tuning</b> &amp; applied ML</span></div>
+          <div class="fact"><span class="fi"></span><span class="ft">Shipped iOS to <b>TestFlight</b> with Expo &amp; EAS</span></div>
+          <div class="fact"><span class="fi"></span><span class="ft">Comfortable across <b>Python, TypeScript &amp; RN</b></span></div>
+          <div class="fact"><span class="fi"></span><span class="ft">Builds <b>MCP servers</b> &amp; AI-agent tooling</span></div>
+          <div class="fact"><span class="fi"></span><span class="ft">Happiest with a <b>working prototype</b> in hand</span></div>
         </div>
       </div>
     </div>
@@ -427,7 +492,8 @@
       </div>
     </div>
     <div class="colophon">
-      © <span id="year">2026</span> Jason Jaacks · Built with curiosity · <a href="https://github.com/maxwell-ventures" target="_blank" rel="noopener">source</a>
+      © <span id="year">2026</span> Jason Jaacks · Built with curiosity · <a href="https://github.com/maxwell-ventures" target="_blank" rel="noopener">source</a><br>
+      <span style="opacity:.8">Galaxy M81: NASA / JPL-Caltech (Spitzer Space Telescope)</span>
     </div>
   </div>
 </footer>
@@ -441,6 +507,116 @@
 </div>
 
 <script>
+  // ---- Astro starfield ----
+  (function () {
+    const canvas = document.getElementById('stars');
+    const ctx = canvas.getContext('2d');
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let W, H, DPR, stars = [], shooting = null, cooldown = 240;
+    const pointer = { x: -9999, y: -9999, tx: -9999, ty: -9999 };
+
+    function themeColors() {
+      const light = document.documentElement.getAttribute('data-theme') === 'light';
+      return light
+        ? { star: '30,41,59', line: '13,148,136' }
+        : { star: '224,240,238', line: '90,200,180' };
+    }
+    let COL = themeColors();
+
+    function resize() {
+      DPR = Math.min(window.devicePixelRatio || 1, 2);
+      W = canvas.width = Math.floor(innerWidth * DPR);
+      H = canvas.height = Math.floor(innerHeight * DPR);
+      canvas.style.width = innerWidth + 'px';
+      canvas.style.height = innerHeight + 'px';
+      const count = Math.min(220, Math.floor((innerWidth * innerHeight) / 9000));
+      stars = Array.from({ length: count }, () => {
+        const depth = Math.random();               // 0 far … 1 near
+        return {
+          x: Math.random() * W, y: Math.random() * H,
+          r: (depth * 1.5 + 0.35) * DPR,
+          depth,
+          base: 0.25 + Math.random() * 0.6,
+          tw: Math.random() * Math.PI * 2,          // twinkle phase
+          tws: 0.006 + Math.random() * 0.02,        // twinkle speed
+          tint: Math.random() < 0.22                // some stars get a cool tint
+        };
+      });
+    }
+
+    function tint(depth) {
+      // galaxy-palette stars: cyan core, green arms, amber knots, blue foreground
+      const c = Math.random();
+      return c < 0.4 ? '47,224,207' : c < 0.7 ? '100,217,138' : c < 0.88 ? '242,162,74' : '92,198,255';
+    }
+
+    function frame() {
+      ctx.clearRect(0, 0, W, H);
+      // ease pointer
+      pointer.x += (pointer.tx - pointer.x) * 0.08;
+      pointer.y += (pointer.ty - pointer.y) * 0.08;
+
+      const near = [];
+      for (const s of stars) {
+        if (!reduce) s.tw += s.tws;
+        const tw = reduce ? s.base : s.base * (0.6 + 0.4 * Math.sin(s.tw));
+        // subtle pointer parallax by depth
+        const px = pointer.x > -9000 ? (pointer.x - W / 2) * s.depth * 0.012 : 0;
+        const py = pointer.y > -9000 ? (pointer.y - H / 2) * s.depth * 0.012 : 0;
+        const x = s.x + px, y = s.y + py;
+        const rgb = s.tint ? tintFor(s) : COL.star;
+        ctx.beginPath();
+        ctx.arc(x, y, s.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(${rgb},${tw})`;
+        ctx.fill();
+        // gather near-pointer stars for constellation lines
+        if (pointer.x > -9000) {
+          const dx = x - pointer.x, dy = y - pointer.y;
+          if (dx * dx + dy * dy < (150 * DPR) ** 2) near.push([x, y]);
+        }
+      }
+      // constellation lines near the cursor
+      if (!reduce && near.length) {
+        for (let i = 0; i < near.length; i++) {
+          const dxp = near[i][0] - pointer.x, dyp = near[i][1] - pointer.y;
+          const dp = Math.sqrt(dxp * dxp + dyp * dyp);
+          const a = Math.max(0, 0.5 - dp / (150 * DPR)) * 0.5;
+          ctx.strokeStyle = `rgba(${COL.line},${a})`;
+          ctx.lineWidth = DPR * 0.6;
+          ctx.beginPath(); ctx.moveTo(pointer.x, pointer.y); ctx.lineTo(near[i][0], near[i][1]); ctx.stroke();
+        }
+      }
+      // occasional shooting star
+      if (!reduce) {
+        if (!shooting && --cooldown <= 0) {
+          const sx = Math.random() * W * 0.7, sy = Math.random() * H * 0.4;
+          shooting = { x: sx, y: sy, vx: (4 + Math.random() * 3) * DPR, vy: (2 + Math.random() * 1.5) * DPR, life: 1 };
+          cooldown = 300 + Math.random() * 500;
+        }
+        if (shooting) {
+          const t = shooting;
+          const tailX = t.x - t.vx * 14, tailY = t.y - t.vy * 14;
+          const g = ctx.createLinearGradient(t.x, t.y, tailX, tailY);
+          g.addColorStop(0, `rgba(${COL.star},${0.9 * t.life})`);
+          g.addColorStop(1, 'rgba(47,224,207,0)');
+          ctx.strokeStyle = g; ctx.lineWidth = DPR * 1.6;
+          ctx.beginPath(); ctx.moveTo(t.x, t.y); ctx.lineTo(tailX, tailY); ctx.stroke();
+          t.x += t.vx; t.y += t.vy; t.life -= 0.012;
+          if (t.life <= 0 || t.x > W || t.y > H) shooting = null;
+        }
+      }
+      requestAnimationFrame(frame);
+    }
+    function tintFor(s) { if (!s._t) s._t = tint(s.depth); return s._t; }
+
+    addEventListener('resize', resize);
+    addEventListener('pointermove', e => { pointer.tx = e.clientX * DPR; pointer.ty = e.clientY * DPR; });
+    addEventListener('pointerleave', () => { pointer.tx = -9999; pointer.ty = -9999; });
+    window.__starTheme = () => { COL = themeColors(); };
+    resize();
+    if (reduce) { frame(); } else { requestAnimationFrame(frame); }
+  })();
+
   // ---- Lightbox (screenshot gallery) ----
   (function () {
     const shots = Array.from(document.querySelectorAll('.shot'));
@@ -474,6 +650,7 @@
     const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
     root.setAttribute('data-theme', next);
     localStorage.setItem('theme', next);
+    if (window.__starTheme) window.__starTheme();
   });
 
   // ---- Year ----
